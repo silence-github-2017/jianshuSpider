@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import scrapy
+import re
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from jianshuSpider.items import JianshuspiderItem
@@ -26,11 +26,17 @@ class JianshuSpider(CrawlSpider):
         # 文章html内容
         content_html = response.xpath("//div[@class='show-content']").get()
         # 发布时间
-        p_time = response.xpath("//span[@class='publish-time']/text()").get().replace('*','')
+        p_time = response.xpath("//span[@class='publish-time']/text()").get().replace('*', '')
         # 文章id
         article_id = response.url.split("?")[0].split('/')[-1]
         # 文章链接
         link_url = response.url
+        # 喜欢数
+        likes_count = response.xpath("//span[@class='likes-count']/text()").get()
+        # 评论
+        comments_count = response.xpath("//span[@class='comments-count']/text()").get()
+        # 阅读量
+        views_count = response.xpath("//span[@class='views-count']/text()").get()
         items = JianshuspiderItem(
             title=title,
             author=author,
@@ -38,6 +44,9 @@ class JianshuSpider(CrawlSpider):
             content_html=content_html,
             p_time=p_time,
             article_id=article_id,
-            link_url=link_url
+            link_url=link_url,
+            likes_count=likes_count,
+            comments_count=comments_count,
+            views_count=views_count
         )
         yield items

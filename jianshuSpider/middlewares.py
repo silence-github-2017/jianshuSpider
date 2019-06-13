@@ -111,6 +111,7 @@ class SileniumDowmloadMiddleware(object):
         self.driver = webdriver.Chrome()
 
     def process_request(self, request, spider):
+        """修改scrapy默认的处理request方式"""
         self.driver.get(request.url)
         time.sleep(0.5)
         try:

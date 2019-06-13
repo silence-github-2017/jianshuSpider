@@ -29,3 +29,9 @@ class JianshuspiderItem(scrapy.Item):
     p_time = scrapy.Field()
     article_id = scrapy.Field()
     link_url = scrapy.Field()
+    # 阅读量
+    views_count = scrapy.Field()
+    # 评论🌲
+    comments_count = scrapy.Field()
+    # 喜欢数
+    likes_count = scrapy.Field()

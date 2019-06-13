@@ -58,8 +58,9 @@ class JianshuTwistedPipeline(object):
     def sql(self):
         if self.__sql is None:
             self.__sql = """
-                 insert into article_copy (id, title,author,avator,content_html,p_time,article_id,link_url)
-                 VALUE (null, %s,%s,%s,%s,%s,%s,%s)
+                 insert into article_copy (id, title,author,avator,content_html,p_time,article_id,link_url,
+                 views_count,comments_count,likes_count)
+                 VALUE (null, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
                 """
         else:
             return self.__sql
@@ -74,7 +75,7 @@ class JianshuTwistedPipeline(object):
     def insert_item(self, cursor, item):
         cursor.execute(self.sql, (item['title'], item['author'], item['avator'],
         item['content_html'], item['p_time'], item['article_id'],
-        item['link_url']))
+        item['link_url'],item['views_count'],item['comments_count'], item['likes_count']))
 
     def handler_error(self, error, item, spider):
         print("---------"+str(error)+"-------------")
